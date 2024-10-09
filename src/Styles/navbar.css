@@ -1,0 +1,43 @@
+
+/* Navbar.css */
+.navbar {
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    background-color: rgb(64, 93, 114); /* Color Primario */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Fija la barra en la parte superior */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.navbar-brand {
+    color: rgb(255, 248, 243); /* Color de Texto */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-links li {
+    margin-left: 20px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: rgb(247, 231, 220); /* Color de Fondo */
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+    color: rgb(117, 134, 148); /* Color Secundario */
+}
+

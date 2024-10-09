@@ -1,0 +1,26 @@
+/* Home.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: rgb(255, 248, 243); /* Color de Fondo */
+}
+
+.home-container {
+    text-align: center;
+    width: 100%;
+    padding: 50px;
+    background-color: rgb(255, 248, 243); /* Color de Fondo */
+    min-height: calc(100vh - 70px); /* Ajusta la altura menos la barra de navegación */
+}
+
+.home-container h1 {
+    font-size: 48px;
+    color: rgb(64, 93, 114); /* Color Primario */
+}
+
+.home-container p {
+    font-size: 24px;
+    color: rgb(117, 134, 148); /* Color Secundario */
+}
