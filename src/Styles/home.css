@@ -1,26 +1,71 @@
-/* Home.css */
+/* home.css */
 
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: rgb(255, 248, 243); /* Color de Fondo */
-}
-
-.home-container {
-    text-align: center;
+.slideshow {
+    position: relative;
     width: 100%;
-    padding: 50px;
-    background-color: rgb(255, 248, 243); /* Color de Fondo */
-    min-height: calc(100vh - 70px); /* Ajusta la altura menos la barra de navegación */
+    height: 100vh; /* Ocupa el 80% de la altura de la ventana */
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out;
 }
 
-.home-container h1 {
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(64, 93, 114, 0.7); /* Color primario con transparencia */
+    padding: 20px 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.overlay h1 {
+    color: rgb(255, 248, 243); /* Color de texto */
     font-size: 48px;
-    color: rgb(64, 93, 114); /* Color Primario */
+    margin-bottom: 10px;
 }
 
-.home-container p {
+.overlay p {
+    color: rgb(255, 248, 243); /* Color de texto */
     font-size: 24px;
-    color: rgb(117, 134, 148); /* Color Secundario */
 }
+
+.info-section {
+    padding: 40px 20px;
+    background-color: rgb(255, 248, 243); /* Color de fondo */
+    text-align: center;
+}
+
+.info-section h2 {
+    color: rgb(64, 93, 114); /* Color primario */
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.info-section p {
+    color: rgb(117, 134, 148); /* Color secundario */
+    font-size: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .overlay h1 {
+        font-size: 32px;
+    }
+
+    .overlay p {
+        font-size: 18px;
+    }
+
+    .info-section h2 {
+        font-size: 28px;
+    }
+
+    .info-section p {
+        font-size: 16px;
+    }
+}
+

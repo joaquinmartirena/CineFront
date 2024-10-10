@@ -55,7 +55,7 @@ input::placeholder {
 
 button {
     width: 100%;
-    background-color: #ff9800;
+    background-color: rgb(64, 93, 114);
     color: white;
     padding: 15px;
     border: none;
@@ -65,7 +65,7 @@ button {
 }
 
 button:hover {
-    background-color: #fb8c00;
+    background-color: rgb(23, 68, 100);
 }
 
 .toggle-link {
@@ -82,4 +82,32 @@ p {
     margin-top: 20px;
     font-size: 14px;
     color: #b3b3b3;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #b3b3b3;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #2a2a2a;
+    color: #fff;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }

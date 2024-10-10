@@ -1,0 +1,47 @@
+
+.galeria-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 40px 0;
+    background-color: rgb(255, 248, 243); /* Color de fondo */
+    text-align: center;
+}
+
+.galeria-container h2 {
+    color: rgb(64, 93, 114); /* Color primario */
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+.pelicula-card {
+    padding: 10px;
+}
+
+.pelicula-card img {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+}
+
+.pelicula-card p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: rgb(64, 93, 114); /* Color primario */
+}
+
+.arrow {
+    position: absolute;
+    top: 45%;
+    font-size: 40px;
+    cursor: pointer;
+    color: rgb(64, 93, 114); /* Color primario */
+    z-index: 2;
+}
+
+.arrow.next {
+    right: 10px;
+}
+
+.arrow.prev {
+    left: 10px;
+}

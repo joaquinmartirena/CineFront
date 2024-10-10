@@ -1,7 +1,18 @@
 
 /* Navbar.css */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+
 .navbar {
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    width: 100vw; /* Asegura que ocupe todo el ancho */
     background-color: rgb(64, 93, 114); /* Color Primario */
     padding: 15px 20px;
     display: flex;
