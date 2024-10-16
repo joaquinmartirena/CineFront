@@ -1,32 +1,32 @@
-
-.galeria-container {
-    width: 90%;
+/* Corrected class names to match the React component */
+.gallery-container {
+    width: 100%;
     margin: 0 auto;
     padding: 40px 0;
-    background-color: rgb(255, 248, 243); /* Color de fondo */
+    background-color: rgb(255, 248, 243); /* Background color */
     text-align: center;
 }
 
-.galeria-container h2 {
-    color: rgb(64, 93, 114); /* Color primario */
+.gallery-container h2 {
+    color: rgb(64, 93, 114); /* Primary color */
     margin-bottom: 20px;
     font-size: 36px;
 }
 
-.pelicula-card {
+.movie-card {
     padding: 10px;
 }
 
-.pelicula-card img {
+.movie-card img {
     width: 100%;
     border-radius: 10px;
     height: auto;
 }
 
-.pelicula-card p {
+.movie-card p {
     margin-top: 10px;
     font-size: 18px;
-    color: rgb(64, 93, 114); /* Color primario */
+    color: rgb(64, 93, 114); /* Primary color */
 }
 
 .arrow {
@@ -34,7 +34,7 @@
     top: 45%;
     font-size: 40px;
     cursor: pointer;
-    color: rgb(64, 93, 114); /* Color primario */
+    color: rgb(64, 93, 114); /* Primary color */
     z-index: 2;
 }
 
@@ -45,3 +45,17 @@
 .arrow.prev {
     left: 10px;
 }
+
+.movie-card {
+    padding: 10px;
+    /* Ensure the card takes up 100% of its container */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.movie-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+

@@ -6,7 +6,7 @@ import "../Styles/navbar.css";
 function Navbar() {
     return (
         <nav className="navbar">
-            <div className="navbar-brand">What the Fun Cinema</div>
+            <div className="navbar-brand">WTF</div>
             <ul className="navbar-links">
                 <li>
                     <Link to="/">Home</Link>
