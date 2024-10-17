@@ -1,0 +1,80 @@
+/* seatMap.css */
+
+.seat-map {
+    margin-top: 40px;
+    text-align: center;
+    }
+
+    .screen {
+    background-color: rgb(117, 134, 148); /* Secondary color */
+    height: 30px;
+    width: 80%;
+    margin: 0 auto 20px auto;
+    color: rgb(255, 248, 243); /* Text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    }
+
+    .seats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .seat-row {
+    display: flex;
+    margin-bottom: 5px;
+    }
+
+    .seat {
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-color: rgb(64, 93, 114); /* Primary color */
+    color: rgb(255, 248, 243); /* Text color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 12px;
+    }
+
+    .seat.occupied {
+    background-color: grey;
+    cursor: not-allowed;
+    }
+
+    .seat.selected {
+    background-color: rgb(117, 134, 148); /* Secondary color */
+    }
+
+    .legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    }
+
+    .legend div {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    }
+
+    .legend .seat {
+    margin: 0 5px 0 0;
+    }
+
+    @media (max-width: 768px) {
+    .seat {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .screen {
+        width: 100%;
+    }
+    }

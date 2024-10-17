@@ -1,8 +1,10 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import '../Styles/home.css';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+    const navigate = useNavigate();
     const images = [
         '/Images/toystory.jpeg',
         '/Images/Dune.jpeg',
@@ -30,6 +32,7 @@ function Home() {
                 <div className="overlay">
                     <h1>Bienvenidos a What The Fun</h1>
                     <p>La mejor experiencia del cine</p>
+                    <button onClick={() => navigate('/select-cinema')}>Reservar Ahora</button>
                 </div>
             </div>
             <div className="info-section">

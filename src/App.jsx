@@ -4,6 +4,7 @@ import Home from './Pages/Home.jsx';
 import Login from './Pages/Login.jsx';
 import Billboard from './Pages/Billboard.jsx';
 import Navbar from './Components/Navbar.jsx';
+import SelectionPage from './Pages/SelectionPage.jsx';
 
 function App() {
   // Utiliza useLocation para obtener la ruta actual
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cartelera" element={<Billboard />} />
+        <Route path="/select-cinema" element={<SelectionPage/>} />
       </Routes>
     </div>
   );

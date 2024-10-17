@@ -92,6 +92,7 @@ const Login = () => {
         try {
             // Codificar la contraseña antes de enviarla
             const hashedPassword = CryptoJS.SHA256(formData.password).toString();
+            console.log(hashedPassword)
 
             if (isRegistering) {
                 // Enviar datos de registro al backend
@@ -116,13 +117,18 @@ const Login = () => {
                 });
             } else {
                 // Enviar datos de inicio de sesión al backend
-                const response = await axios.post('http://localhost:8080/api/users/login', {
+                const response = await axios.post('http://localhost:8080/api/users/login', null,{
+                params: {
                     userId: formData.userId,         // Cambiado 'id' por 'userId'
-                    password: hashedPassword,        // Cambiado 'enc_password' por 'password'
+                    password: hashedPassword,
+                    }
                 });
+
+                console.log(response)
                 // Manejar la respuesta del backend
-                if (response.data.success) {
-                    // Guardar token o información de sesión si es necesario
+                if (response.status == 200) {
+                    // Store userId in sessionStorage
+                    sessionStorage.setItem('userId', formData.userId);
                     // Redirigir al home
                     navigate('/');
                 } else {
