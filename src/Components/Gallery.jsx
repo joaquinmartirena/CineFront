@@ -26,7 +26,7 @@ function Gallery() {
         dots: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 4, // Show 4 images at a time
+        slidesToShow: 4, 
         slidesToScroll: 4,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
