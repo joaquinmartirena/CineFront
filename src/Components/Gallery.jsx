@@ -8,17 +8,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function Gallery() {
-    const [movies, setMovies] = useState([]);
+    const [images, setImages] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/movies')
+        axios.get('http://localhost:8080/api/movies/image')
             .then(response => {
-                console.log('Movies response:', response.data);
-                setMovies(Array.isArray(response.data) ? response.data : []);
+                console.log('Images response:', response.data);
+                setImages(Array.isArray(response.data) ? response.data : []);
             })
             .catch(error => {
-                console.error('Error fetching movies:', error);
-                setMovies([]);
+                console.error('Error fetching images:', error);
+                setImages([]);
             });
     }, []);
 
@@ -58,15 +58,14 @@ function Gallery() {
     return (
         <div className="gallery-container">
             <h2>Movies in Theaters</h2>
-            {movies.length > 0 ? (
+            {images.length > 0 ? (
                 <Slider {...settings}>
-                    {movies.map((movie) => (
-                        <div key={movie.id} className="movie-card">
+                    {images.map((image, index) => (
+                        <div key={index} className="movie-card">
                             <img 
-                                src={`data:image/jpeg;base64,${movie.image}`} 
-                                alt={movie.name} 
+                                src={`data:image/jpeg;base64,${image}`} 
+                                alt={`Movie ${index}`} 
                             />
-                            <p>{movie.name}</p>
                         </div>
                     ))}
                 </Slider>
