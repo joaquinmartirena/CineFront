@@ -37,89 +37,90 @@ function SelectionPage() {
 
     // Handle cinema selection change
     const handleCinemaChange = (e) => {
-        const ciNumber = parseInt(e.target.value, 10);
-        const cinema = cinemas.find((c) => c.ciNumber === ciNumber);
-        setSelectedCinema(cinema);
-        setSelectedMovie(null);
-        setAvailableSchedules([]);
-        setSelectedSchedule(null);
-        setShowSeatMap(false);
-        setSelectedSeats([]);
+    const ciNumber = parseInt(e.target.value, 10);
+    const cinema = cinemas.find((c) => c.ciNumber === ciNumber);
+    setSelectedCinema(cinema);
+    setSelectedMovie(null);
+    setAvailableSchedules([]);
+    setSelectedSchedule(null);
+    setShowSeatMap(false);
+    setSelectedSeats([]);
 
-        if (cinema) {
-            // Fetch movies for the selected cinema
-            setLoading(true);
-            fetch(`http://localhost:8080/api/shows/cinema/${encodeURIComponent(ciNumber)}`)
-            .then((response) => {
-                if (response.ok) {
-                return response.json();
-                } else if (response.status === 404) {
-                // No movies found for this cinema
-                return [];
-                } else {
-                throw new Error(`Error fetching movies: ${response.statusText}`);
-                }
-            })
-            .then((data) => {
-                // Remove duplicates based on movieId
-                const uniqueMoviesMap = new Map();
-                data.forEach((movie) => {
-                if (!uniqueMoviesMap.has(movie.movieId)) {
-                    uniqueMoviesMap.set(movie.movieId, movie);
-                }
-                });
-                const uniqueMovies = Array.from(uniqueMoviesMap.values());
-
-                setAvailableMovies(uniqueMovies);
-                setError(null); // Clear any previous errors
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching movies:', error);
-                setAvailableMovies([]); // Clear availableMovies in case of error
-                setError(error);
-                setLoading(false);
+    if (cinema) {
+        // Fetch movies for the selected cinema
+        setLoading(true);
+        fetch(`http://localhost:8080/api/shows/cinema/${encodeURIComponent(ciNumber)}`)
+        .then((response) => {
+            if (response.ok) {
+            return response.json();
+            } else if (response.status === 404) {
+            // No movies found for this cinema
+            return [];
+            } else {
+            throw new Error(`Error fetching movies: ${response.statusText}`);
+            }
+        })
+        .then((data) => {
+            // Remove duplicates based on movieId
+            const uniqueMoviesMap = new Map();
+            data.forEach((movie) => {
+            if (!uniqueMoviesMap.has(movie.movieId)) {
+                uniqueMoviesMap.set(movie.movieId, movie);
+            }
             });
-        } else {
-            setAvailableMovies([]);
-        }
+            const uniqueMovies = Array.from(uniqueMoviesMap.values());
+
+            setAvailableMovies(uniqueMovies);
+            setError(null); // Clear any previous errors
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.error('Error fetching movies:', error);
+            setAvailableMovies([]); // Clear availableMovies in case of error
+            setError(error);
+            setLoading(false);
+        });
+    } else {
+        setAvailableMovies([]);
+    }
     };
 
     // Handle movie selection change
     const handleMovieChange = (e) => {
-        const movieId = e.target.value; // movieId is a string
-        const movie = availableMovies.find((m) => m.movieId === movieId);
-        setSelectedMovie(movie);
-        setSelectedSchedule(null);
-        setShowSeatMap(false);
-        setSelectedSeats([]);
+    const movieId = e.target.value; // movieId is a string
+    const movie = availableMovies.find((m) => m.movieId === movieId);
+    setSelectedMovie(movie);
+    setSelectedSchedule(null);
+    setShowSeatMap(false);
+    setSelectedSeats([]);
 
-        if (movie) {
-            // Fetch schedules for the selected movie
-            setLoading(true);
-            fetch(`http://localhost:8080/api/shows/movie/${encodeURIComponent(movieId)}/schedules`)
-            .then((response) => response.json())
-            .then((data) => {
-                setAvailableSchedules(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching schedules:', error);
-                setError(error);
-                setLoading(false);
-            });
-        } else {
-            setAvailableSchedules([]);
-        }
+    if (movie && selectedCinema) {
+        // Fetch schedules for the selected movie and cinema
+        setLoading(true);
+        const cinemaNumber = selectedCinema.ciNumber;
+        const url = `http://localhost:8080/api/shows/showtimes?movieId=${encodeURIComponent(movieId)}&cinemaNumber=${encodeURIComponent(cinemaNumber)}`;
+        fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            setAvailableSchedules(data);
+            setLoading(false);
+        })
+        .catch((error) => {
+            console.error('Error fetching schedules:', error);
+            setError(error);
+            setLoading(false);
+        });
+    } else {
+        setAvailableSchedules([]);
+    }
     };
 
     // Handle schedule selection change
     const handleScheduleChange = (e) => {
-        const scheduleId = e.target.value; // Assuming scheduleId is a string
-        const schedule = availableSchedules.find((s) => s.id === scheduleId);
-        setSelectedSchedule(schedule);
-        setShowSeatMap(false);
-        setSelectedSeats([]);
+    const schedule = e.target.value; // schedule is the date-time string
+    setSelectedSchedule(schedule);
+    setShowSeatMap(false);
+    setSelectedSeats([]);
     };
 
     // Handle number of seats change
@@ -142,11 +143,20 @@ function SelectionPage() {
     const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Prepare the seats data
+    const seatsData = selectedSeats.map((seatId) => {
+        const [seatRow, seatColumn] = seatId.split('-').map(Number);
+        return {
+        seatRow,
+        seatColumn,
+        };
+    });
+
     const reservationData = {
         cinemaId: selectedCinema.ciNumber,
-        movieId: selectedMovie.movieId, // Use movieId instead of id
-        scheduleId: selectedSchedule.id,
-        seats: selectedSeats,
+        movieId: selectedMovie.movieId,
+        scheduleTime: selectedSchedule,
+        seats: seatsData, // Use the seats data
     };
 
     fetch('http://localhost:8080/api/reservations', {
@@ -167,6 +177,24 @@ function SelectionPage() {
         setError(error);
         });
     };
+
+    // Helper function to format date-time strings
+    function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const dayName = daysOfWeek[date.getDay()];
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}`;
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+    return `${dayName} ${formattedDate} ${formattedTime}`;
+    }
 
     return (
     <div className="selection-page">
@@ -220,14 +248,14 @@ function SelectionPage() {
             <div className="form-group">
                 <label>Selecciona el Horario:</label>
                 <select
-                value={selectedSchedule ? selectedSchedule.id : ''}
+                value={selectedSchedule ? selectedSchedule : ''}
                 onChange={handleScheduleChange}
                 required
                 >
                 <option value="">--Selecciona un Horario--</option>
                 {availableSchedules.map((schedule) => (
-                    <option key={schedule.id} value={schedule.id}>
-                    {schedule.time}
+                    <option key={schedule} value={schedule}>
+                    {formatDateTime(schedule)}
                     </option>
                 ))}
                 </select>
@@ -245,6 +273,7 @@ function SelectionPage() {
                 value={numSeats}
                 onChange={handleNumSeatsChange}
                 required
+                className="number-input"
                 />
             </div>
             )}
@@ -264,7 +293,9 @@ function SelectionPage() {
                 numSeats={numSeats}
                 selectedSeats={selectedSeats}
                 onSeatSelection={handleSeatSelection}
-                scheduleId={selectedSchedule.id}
+                scheduleTime={selectedSchedule}
+                cinemaId={selectedCinema.ciNumber}
+                movieId={selectedMovie.movieId}
             />
             )}
 
