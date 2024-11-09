@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/seatMap.css';
 
-function SeatMap({ numSeats, selectedSeats, onSeatSelection, scheduleTime, cinemaId, movieId }) {
+function SeatMap({ numSeats, selectedSeats, onSeatSelection, scheduleTime, cinemaId, movieId, onShowCodeFetched }) {
     const [seats, setSeats] = useState([]);
     const [loadingSeats, setLoadingSeats] = useState(false);
     const [error, setError] = useState(null);
@@ -23,6 +23,18 @@ function SeatMap({ numSeats, selectedSeats, onSeatSelection, scheduleTime, cinem
         .then((data) => {
         setSeats(data);
         setLoadingSeats(false);
+
+        if (data.length > 0) {
+            // Extract showCode from the first seat
+            const showCode = data[0].id.showCode;
+            // Call the callback to pass showCode back to parent
+            if (onShowCodeFetched) {
+            onShowCodeFetched(showCode);
+            }
+        } else {
+            console.error('No seats data received');
+            setError(new Error('No seats data received'));
+        }
         })
         .catch((error) => {
         console.error('Error fetching seats:', error);

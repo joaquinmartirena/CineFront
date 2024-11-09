@@ -99,4 +99,10 @@
         font-size: 18px;
         padding: 12px 25px;
     }
+    
+    .loading-message {
+        margin-top: 20px;
+        font-weight: bold;
+        color: #333;
+    }
 }

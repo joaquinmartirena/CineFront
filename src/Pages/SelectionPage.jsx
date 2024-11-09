@@ -1,5 +1,6 @@
 // SelectionPage.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import SeatMap from '../Components/SeatMap';
 import '../Styles/selectionPage.css';
 
@@ -14,10 +15,16 @@ function SelectionPage() {
     const [numSeats, setNumSeats] = useState(1);
     const [showSeatMap, setShowSeatMap] = useState(false);
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [showCode, setShowCode] = useState(null); // State for showCode
 
     // Loading and error states
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // New state for submission status
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     // Fetch cinemas on component mount
     useEffect(() => {
@@ -45,6 +52,7 @@ function SelectionPage() {
     setSelectedSchedule(null);
     setShowSeatMap(false);
     setSelectedSeats([]);
+    setShowCode(null); // Reset showCode
 
     if (cinema) {
         // Fetch movies for the selected cinema
@@ -93,12 +101,15 @@ function SelectionPage() {
     setSelectedSchedule(null);
     setShowSeatMap(false);
     setSelectedSeats([]);
+    setShowCode(null); // Reset showCode
 
     if (movie && selectedCinema) {
         // Fetch schedules for the selected movie and cinema
         setLoading(true);
         const cinemaNumber = selectedCinema.ciNumber;
-        const url = `http://localhost:8080/api/shows/showtimes?movieId=${encodeURIComponent(movieId)}&cinemaNumber=${encodeURIComponent(cinemaNumber)}`;
+        const url = `http://localhost:8080/api/shows/showtimes?movieId=${encodeURIComponent(
+        movieId
+        )}&cinemaNumber=${encodeURIComponent(cinemaNumber)}`;
         fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -121,6 +132,7 @@ function SelectionPage() {
     setSelectedSchedule(schedule);
     setShowSeatMap(false);
     setSelectedSeats([]);
+    setShowCode(null); // Reset showCode
     };
 
     // Handle number of seats change
@@ -139,59 +151,100 @@ function SelectionPage() {
     setSelectedSeats(seats);
     };
 
+    // Handle showCode received from SeatMap
+    const handleShowCodeFetched = (code) => {
+    setShowCode(code);
+    };
+
     // Submit reservation to the backend
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare the seats data
+    // Retrieve userId from sessionStorage
+    const userId = sessionStorage.getItem('userId');
+
+    if (!userId) {
+        alert('Por favor, inicia sesión para realizar una reserva.');
+        return;
+    }
+
+    if (!showCode) {
+        alert('No se pudo obtener el código de la función (showCode).');
+        return;
+    }
+
+    // Prepare the seats data with showCode
     const seatsData = selectedSeats.map((seatId) => {
         const [seatRow, seatColumn] = seatId.split('-').map(Number);
         return {
+        showCode: showCode,
         seatRow,
         seatColumn,
         };
     });
 
-    const reservationData = {
-        cinemaId: selectedCinema.ciNumber,
-        movieId: selectedMovie.movieId,
-        scheduleTime: selectedSchedule,
-        seats: seatsData, // Use the seats data
-    };
+    const reservationData = seatsData; // The API expects an array of seat objects
 
-    fetch('http://localhost:8080/api/reservations', {
+    const url = `http://localhost:8080/api/reservations?userId=${encodeURIComponent(userId)}`;
+
+    try {
+        setIsSubmitting(true); // Start submission
+
+        const reservationResponse = await fetch(url, {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(reservationData),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-        // Handle server response
-        alert(`Reserva confirmada: ${JSON.stringify(data)}`);
-        // Reset form if necessary
-        })
-        .catch((error) => {
+        });
+
+        if (!reservationResponse.ok) {
+        throw new Error('Error making reservation');
+        }
+
+        // Await the response data if needed
+        // const data = await reservationResponse.json();
+
+        // Display a simple confirmation message
+        alert('Reserva confirmada.');
+
+        // Navigate back to the home page
+        navigate('/');
+
+    } catch (error) {
         console.error('Error creating reservation:', error);
         setError(error);
-        });
+    } finally {
+        setIsSubmitting(false); // End submission
+    }
     };
 
     // Helper function to format date-time strings
     function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const daysOfWeek = [
+        'Domingo',
+        'Lunes',
+        'Martes',
+        'Miércoles',
+        'Jueves',
+        'Viernes',
+        'Sábado',
+    ];
     const dayName = daysOfWeek[date.getDay()];
 
     const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are zero-indexed, so add 1
+    const month = date.getMonth() + 1; // Months are zero-indexed
 
     const hours = date.getHours();
     const minutes = date.getMinutes();
 
-    const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}`;
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    const formattedDate = `${day.toString().padStart(2, '0')}/${month
+        .toString()
+        .padStart(2, '0')}`;
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
+        .toString()
+        .padStart(2, '0')}`;
 
     return `${dayName} ${formattedDate} ${formattedTime}`;
     }
@@ -221,8 +274,8 @@ function SelectionPage() {
             </div>
 
             {/* Select Movie */}
-            {selectedCinema && (
-            availableMovies.length > 0 ? (
+            {selectedCinema &&
+            (availableMovies.length > 0 ? (
                 <div className="form-group">
                 <label>Selecciona la Película:</label>
                 <select
@@ -239,9 +292,8 @@ function SelectionPage() {
                 </select>
                 </div>
             ) : (
-                <div className="no-movies">No movies available in this cinema.</div>
-            )
-            )}
+                <div className="no-movies">No hay películas disponibles en este cine.</div>
+            ))}
 
             {/* Select Schedule */}
             {availableSchedules.length > 0 && (
@@ -296,15 +348,21 @@ function SelectionPage() {
                 scheduleTime={selectedSchedule}
                 cinemaId={selectedCinema.ciNumber}
                 movieId={selectedMovie.movieId}
+                onShowCodeFetched={handleShowCodeFetched} // Pass the callback
             />
             )}
 
             {/* Confirm Reservation */}
             {selectedSeats.length === numSeats && (
             <div className="button-container">
-                <button type="submit">Confirmar Reserva</button>
+                <button type="submit" disabled={isSubmitting}>
+                Confirmar Reserva
+                </button>
             </div>
             )}
+
+            {/* Display submission loading message */}
+            {isSubmitting && <div className="loading-message">Confirmando reserva...</div>}
         </form>
         )}
     </div>

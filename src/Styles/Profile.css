@@ -1,0 +1,89 @@
+/* profile.css */
+
+    body {
+    font-family: 'Arial', sans-serif;
+    }
+
+    .profile-page {
+    margin-top: 40px;
+    height: 100vh;
+    padding: 20px;
+    background-color: #fdfdfd;
+    }
+
+    .profile-page h1 {
+    margin-top: 70px;
+    margin-bottom: 20px;
+    color: #333;
+    }
+
+    .reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    }
+
+    .reservations-table th,
+    .reservations-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    color: #000;
+    font-size: 16px;
+    }
+
+    .reservations-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    }
+
+    .reservations-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    }
+
+    .reservations-table tr:hover {
+    background-color: #e6e6e6;
+    }
+
+    .reservations-table button {
+    padding: 8px 16px;
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    }
+
+    .reservations-table button:hover {
+    background-color: #c9302c;
+    }
+
+    p {
+    font-size: 16px;
+    color: #333;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+    .reservations-table th,
+    .reservations-table td {
+    padding: 8px;
+    font-size: 14px;
+    }
+
+    .reservations-table button {
+    padding: 6px 12px;
+    font-size: 12px;
+    }
+
+    /* profile.css */
+
+    .error-message {
+        color: red;
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+}

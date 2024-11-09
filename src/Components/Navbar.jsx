@@ -15,6 +15,9 @@ function Navbar() {
                     <Link to="/cartelera">Cartelera</Link>
                 </li>
                 <li>
+                    <Link to="/Profile">Profile</Link>
+                </li>
+                <li>
                     <Link to="/login">Login</Link>
                 </li>
             </ul>

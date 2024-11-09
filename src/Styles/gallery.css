@@ -1,3 +1,5 @@
+/* gallery.css */
+
 /* Corrected class names to match the React component */
 .gallery-container {
     width: 100%;
@@ -26,6 +28,7 @@
     cursor: pointer;
     color: rgb(64, 93, 114); /* Primary color */
     z-index: 2;
+    user-select: none; /* Prevent text selection while dragging */
 }
 
 .arrow.next {
@@ -34,6 +37,10 @@
 
 .arrow.prev {
     left: 10px;
+}
+
+.arrow:hover {
+    color: rgb(30, 60, 80); /* Darker shade on hover */
 }
 
 .movie-card {
@@ -48,5 +55,69 @@
     height: 600px;
     border-radius: 10px;
     object-fit: cover;
+    pointer-events: none; /* Allow dragging on the image */
 }
 
+/* Added styles for slick carousel dots */
+.slick-dots {
+    bottom: -30px; /* Adjust position if necessary */
+}
+
+.slick-dots li button:before {
+    font-size: 12px;
+    color: rgb(64, 93, 114); /* Primary color */
+    opacity: 0.5;
+}
+
+.slick-dots li.slick-active button:before {
+    color: rgb(64, 93, 114); /* Primary color */
+    opacity: 1;
+}
+
+/* Loading and error messages */
+.loading-message,
+.error-message {
+    font-size: 18px;
+    color: rgb(64, 93, 114); /* Primary color */
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Ensure draggable elements work properly */
+.slick-slide {
+    outline: none; /* Remove blue outline around slides when clicked */
+}
+
+.slick-slide img {
+    display: block;
+    pointer-events: none; /* Ensure images don't interfere with dragging */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .movie-card img {
+        height: 400px; /* Adjust height for smaller screens */
+    }
+
+    .arrow {
+        font-size: 30px;
+    }
+
+    .gallery-container h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .movie-card img {
+        height: 300px; /* Adjust height for mobile screens */
+    }
+
+    .arrow {
+        font-size: 24px;
+    }
+
+    .gallery-container h2 {
+        font-size: 24px;
+    }
+}
