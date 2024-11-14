@@ -1,5 +1,6 @@
-
 /* Navbar.css */
+
+/* General Styles */
 * {
     box-sizing: border-box;
 }
@@ -11,6 +12,7 @@ body, html {
     overflow-x: hidden; /* Evita scroll horizontal */
 }
 
+/* Navbar Styles */
 .navbar {
     width: 100vw; /* Asegura que ocupe todo el ancho */
     background-color: rgb(64, 93, 114); /* Color Primario */
@@ -30,12 +32,11 @@ body, html {
     font-weight: bold;
 }
 
+/* Navbar Links */
 .navbar-links {
     list-style: none;
     display: flex;
-    margin: 0;
-    margin-right: 50px;
-    margin-left: 50px;
+    margin: 0 50px;
     padding: 0;
 }
 
@@ -43,14 +44,26 @@ body, html {
     margin-left: 30px;
 }
 
-.navbar-links a {
+.navbar-links li a,
+.navbar-links li .logout-button {
     text-decoration: none;
     color: rgb(247, 231, 220); /* Color de Fondo */
     font-size: 18px;
     transition: color 0.3s;
 }
 
-.navbar-links a:hover {
+/* Adjustments for Logout Button */
+.navbar-links li .logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Hover Styles */
+.navbar-links li a:hover,
+.navbar-links li .logout-button:hover {
     color: rgb(117, 134, 148); /* Color Secundario */
+    text-decoration: underline;
 }
 

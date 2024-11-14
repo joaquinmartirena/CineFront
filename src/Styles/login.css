@@ -4,59 +4,62 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right,#101010, #303030 );
+    background-color: #f0f0f0; /* Light background */
 }
 
 .login-container {
     width: 350px;
     margin: 100px auto;
     padding: 30px;
-    background: hsl(240, 4%, 15%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
-    color: #fff;
+    color: #333333; /* Dark gray text */
 }
 
 .login-container h2 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #eee;
+    color: #333333; /* Dark gray text */
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-align: left;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #b3b3b3;
+    color: #333333; /* Dark gray text */
+    font-size: 16px;
 }
 
 input[type='text'],
 input[type='password'],
-input[type='email'] {
+input[type='email'],
+input[type='date'] {
     width: 100%;
     padding: 12px;
     margin: 5px 0 10px 0;
-    border: none;
+    border: 1px solid #cccccc;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #2a2a2a;
-    color: #fff;
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark gray text */
+    font-size: 16px;
 }
 
 input::placeholder {
-    color: #757575;
+    color: #888888; /* Medium gray placeholder text */
 }
 
 button {
     width: 100%;
-    background-color: rgb(64, 93, 114);
-    color: white;
+    background-color: rgb(64, 93, 114); /* Blue button */
+    color: #ffffff; /* White text */
     padding: 15px;
     border: none;
     border-radius: 5px;
@@ -65,11 +68,11 @@ button {
 }
 
 button:hover {
-    background-color: rgb(23, 68, 100);
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 .toggle-link {
-    color: #eee;
+    color: #007bff; /* Blue link */
     cursor: pointer;
     font-weight: bold;
 }
@@ -81,33 +84,11 @@ button:hover {
 p {
     margin-top: 20px;
     font-size: 14px;
-    color: #b3b3b3;
-}
-
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #b3b3b3;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0 10px 0;
-    border: none;
-    border-radius: 5px;
-    box-sizing: border-box;
-    background-color: #2a2a2a;
-    color: #fff;
+    color: #333333; /* Dark gray text */
 }
 
 .error {
-    color: red;
+    color: #ff0000; /* Red error text */
     font-size: 14px;
     margin-top: 5px;
 }

@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/profile.css';
 
 function Profile() {
-    // State variables
+  // State variables
     const [user, setUser] = useState(null);
     const [reservations, setReservations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cancellingReservationId, setCancellingReservationId] = useState(null);
 
     // Fetch user information and reservations when the component mounts
     useEffect(() => {
@@ -43,13 +44,18 @@ function Profile() {
 
         // Fetch user reservations
         const reservationsResponse = await fetch(
-            `http://localhost:8080/api/reservations/user?userId=${encodeURIComponent(userId)}`
+            `http://localhost:8080/api/users/reservations?userId=${encodeURIComponent(userId)}`
         );
-        if (!reservationsResponse.ok) {
+
+        if (reservationsResponse.ok) {
+            const reservationsData = await reservationsResponse.json();
+            setReservations(reservationsData);
+        } else if (reservationsResponse.status === 404) {
+            // No reservations found for the user
+            setReservations([]); // Set reservations to an empty array
+        } else {
             throw new Error('Error al obtener las reservas');
         }
-        const reservationsData = await reservationsResponse.json();
-        setReservations(reservationsData);
 
         setLoading(false);
         } catch (err) {
@@ -66,6 +72,7 @@ function Profile() {
     const handleCancelReservation = async (reservationId) => {
     if (window.confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
         try {
+        setCancellingReservationId(reservationId); // Set the cancelling reservation ID
         const response = await fetch(
             `http://localhost:8080/api/reservations?reservationId=${reservationId}`,
             {
@@ -84,6 +91,8 @@ function Profile() {
         } catch (err) {
         console.error(err);
         alert('Hubo un error al cancelar la reserva.');
+        } finally {
+        setCancellingReservationId(null); // Reset the cancelling reservation ID
         }
     }
     };
@@ -166,8 +175,13 @@ function Profile() {
                     </td>
                     <td>${reservation.total}</td>
                     <td>
-                        <button onClick={() => handleCancelReservation(reservation.reservationId)}>
-                        Cancelar
+                        <button
+                        onClick={() => handleCancelReservation(reservation.reservationId)}
+                        disabled={cancellingReservationId === reservation.reservationId}
+                        >
+                        {cancellingReservationId === reservation.reservationId
+                            ? 'Cancelando...'
+                            : 'Cancelar'}
                         </button>
                     </td>
                     </tr>
