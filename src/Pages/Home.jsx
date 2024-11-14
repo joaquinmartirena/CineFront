@@ -36,11 +36,10 @@ function Home() {
                 </div>
             </div>
             <div className="info-section">
-                <h2>Nuestra Ubicación</h2>
+                <h2>Sobre nosotros</h2>
                 <p>
-                    Estamos ubicados en el corazón de la ciudad, en la Avenida Principal 1234.
-                    Ofrecemos las últimas películas en cartelera con la mejor calidad de imagen y sonido.
-                    ¡Ven y vive una experiencia inolvidable!
+                ¡Sumergite en la experiencia cinematográfica única que te ofrece What The Fun Cinemas! 
+                 Somos más que un cine: somos un lugar donde la emoción y la tecnología de vanguardia se fusionan para hacer que cada visita sea inolvidable. 
                 </p>
             </div>
         </div>
