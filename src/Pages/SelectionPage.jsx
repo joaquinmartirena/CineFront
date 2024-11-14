@@ -1,6 +1,6 @@
 // SelectionPage.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import SeatMap from '../Components/SeatMap';
 import '../Styles/selectionPage.css';
 
@@ -113,7 +113,11 @@ function SelectionPage() {
         fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            setAvailableSchedules(data);
+            // Filter schedules to only include future dates
+            const now = new Date();
+            const futureSchedules = data.filter((schedule) => new Date(schedule) > now);
+
+            setAvailableSchedules(futureSchedules);
             setLoading(false);
         })
         .catch((error) => {
@@ -202,15 +206,11 @@ function SelectionPage() {
         throw new Error('Error making reservation');
         }
 
-        // Await the response data if needed
-        // const data = await reservationResponse.json();
-
         // Display a simple confirmation message
         alert('Reserva confirmada.');
 
         // Navigate back to the home page
         navigate('/');
-
     } catch (error) {
         console.error('Error creating reservation:', error);
         setError(error);
@@ -296,23 +296,30 @@ function SelectionPage() {
             ))}
 
             {/* Select Schedule */}
-            {availableSchedules.length > 0 && (
-            <div className="form-group">
+            {selectedMovie &&
+            (availableSchedules.length > 0 ? (
+                <div className="form-group">
                 <label>Selecciona el Horario:</label>
                 <select
-                value={selectedSchedule ? selectedSchedule : ''}
-                onChange={handleScheduleChange}
-                required
+                    value={selectedSchedule ? selectedSchedule : ''}
+                    onChange={handleScheduleChange}
+                    required
                 >
-                <option value="">--Selecciona un Horario--</option>
-                {availableSchedules.map((schedule) => (
+                    <option value="">--Selecciona un Horario--</option>
+                    {availableSchedules.map((schedule) => (
                     <option key={schedule} value={schedule}>
-                    {formatDateTime(schedule)}
+                        {formatDateTime(schedule)}
                     </option>
-                ))}
+                    ))}
                 </select>
-            </div>
-            )}
+                </div>
+            ) : (
+                selectedMovie && (
+                <div className="no-schedules">
+                    No hay horarios futuros disponibles para esta película.
+                </div>
+                )
+            ))}
 
             {/* Number of Seats */}
             {selectedSchedule && (
