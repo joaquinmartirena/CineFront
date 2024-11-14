@@ -96,7 +96,7 @@ const Login = () => {
 
             if (isRegistering) {
                 // Enviar datos de registro al backend
-                const response = await axios.post('http://localhost:8080/api/users/register', {
+                const response = await axios.post('https://proyecto-tic-g4-h8a0.onrender.com/api/users/register', {
                     name: formData.name,
                     lastName: formData.lastName,
                     userId: formData.userId,         // Cambiado 'id' por 'userId'
@@ -117,7 +117,7 @@ const Login = () => {
                 });
             } else {
                 // Enviar datos de inicio de sesión al backend
-                const response = await axios.post('http://localhost:8080/api/users/login', null,{
+                const response = await axios.post('https://proyecto-tic-g4-h8a0.onrender.com/api/users/login', null,{
                 params: {
                     userId: formData.userId,         // Cambiado 'id' por 'userId'
                     password: hashedPassword,

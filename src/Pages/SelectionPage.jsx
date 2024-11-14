@@ -29,7 +29,7 @@ function SelectionPage() {
     // Fetch cinemas on component mount
     useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8080/api/cinemas')
+    fetch('https://proyecto-tic-g4-h8a0.onrender.com/api/cinemas')
         .then((response) => response.json())
         .then((data) => {
         setCinemas(data);
@@ -57,7 +57,7 @@ function SelectionPage() {
     if (cinema) {
         // Fetch movies for the selected cinema
         setLoading(true);
-        fetch(`http://localhost:8080/api/shows/cinema/${encodeURIComponent(ciNumber)}`)
+        fetch(`https://proyecto-tic-g4-h8a0.onrender.com/api/shows/cinema/${encodeURIComponent(ciNumber)}`)
         .then((response) => {
             if (response.ok) {
             return response.json();
@@ -107,7 +107,7 @@ function SelectionPage() {
         // Fetch schedules for the selected movie and cinema
         setLoading(true);
         const cinemaNumber = selectedCinema.ciNumber;
-        const url = `http://localhost:8080/api/shows/showtimes?movieId=${encodeURIComponent(
+        const url = `https://proyecto-tic-g4-h8a0.onrender.com/api/shows/showtimes?movieId=${encodeURIComponent(
         movieId
         )}&cinemaNumber=${encodeURIComponent(cinemaNumber)}`;
         fetch(url)
@@ -189,7 +189,7 @@ function SelectionPage() {
 
     const reservationData = seatsData; // The API expects an array of seat objects
 
-    const url = `http://localhost:8080/api/reservations?userId=${encodeURIComponent(userId)}`;
+    const url = `https://proyecto-tic-g4-h8a0.onrender.com/api/reservations?userId=${encodeURIComponent(userId)}`;
 
     try {
         setIsSubmitting(true); // Start submission

@@ -13,7 +13,7 @@ function Gallery() {
     const [error, setError] = useState(null);     // Error state
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/movies/image')
+        axios.get('https://proyecto-tic-g4-h8a0.onrender.com/api/movies/image')
             .then(response => {
                 console.log('Images response:', response.data);
                 setImages(Array.isArray(response.data) ? response.data : []);

@@ -17,7 +17,7 @@ function SeatMap({ numSeats, selectedSeats, onSeatSelection, scheduleTime, cinem
     useEffect(() => {
     // Fetch seat data when the component mounts
     setLoadingSeats(true);
-    const url = `http://localhost:8080/api/shows/seats?movieId=${encodeURIComponent(movieId)}&cinemaNumber=${encodeURIComponent(cinemaId)}&showTime=${encodeURIComponent(scheduleTime)}`;
+    const url = `https://proyecto-tic-g4-h8a0.onrender.com/api/shows/seats?movieId=${encodeURIComponent(movieId)}&cinemaNumber=${encodeURIComponent(cinemaId)}&showTime=${encodeURIComponent(scheduleTime)}`;
     fetch(url)
         .then((response) => response.json())
         .then((data) => {

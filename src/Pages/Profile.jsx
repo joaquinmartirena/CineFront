@@ -27,7 +27,7 @@ function Profile() {
 
         // Fetch user details
         const userResponse = await fetch(
-            `http://localhost:8080/api/users/${encodeURIComponent(userId)}`
+            `https://proyecto-tic-g4-h8a0.onrender.com/api/users/${encodeURIComponent(userId)}`
         );
 
         if (!userResponse.ok) {
@@ -44,7 +44,7 @@ function Profile() {
 
         // Fetch user reservations
         const reservationsResponse = await fetch(
-            `http://localhost:8080/api/users/reservations?userId=${encodeURIComponent(userId)}`
+            `https://proyecto-tic-g4-h8a0.onrender.com/api/users/reservations?userId=${encodeURIComponent(userId)}`
         );
 
         if (reservationsResponse.ok) {
@@ -74,7 +74,7 @@ function Profile() {
         try {
         setCancellingReservationId(reservationId); // Set the cancelling reservation ID
         const response = await fetch(
-            `http://localhost:8080/api/reservations?reservationId=${reservationId}`,
+            `https://proyecto-tic-g4-h8a0.onrender.com/api/reservations?reservationId=${reservationId}`,
             {
             method: 'DELETE',
             }
