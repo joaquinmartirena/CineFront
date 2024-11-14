@@ -17,11 +17,21 @@ function Home() {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 3000); // Cambia de imagen cada 1 segundo
-    
+        }, 3000); // Cambia de imagen cada 3 segundos
+
         return () => clearInterval(interval);
     }, [images.length]);
-    
+
+    const handleReservationClick = () => {
+        const userId = sessionStorage.getItem('userId');
+        if (userId) {
+            // User is logged in, navigate to the reservation page
+            navigate('/select-cinema');
+        } else {
+            // User is not logged in, navigate to the login page
+            navigate('/login', { state: { from: '/select-cinema' } });
+        }
+    };
 
     return (
         <div className="home-container">
@@ -32,7 +42,7 @@ function Home() {
                 <div className="overlay">
                     <h1>Bienvenidos a What The Fun</h1>
                     <p>La mejor experiencia del cine</p>
-                    <button onClick={() => navigate('/select-cinema')}>Reservar Ahora</button>
+                    <button onClick={handleReservationClick}>Reservar Ahora</button>
                 </div>
             </div>
             <div className="info-section">
