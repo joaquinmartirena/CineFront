@@ -6,6 +6,7 @@ import Billboard from './Pages/Billboard.jsx';
 import Navbar from './Components/Navbar.jsx';
 import SelectionPage from './Pages/SelectionPage.jsx';
 import Profile from './Pages/Profile.jsx';
+import '..src/App.css';
 
 function App() {
   // Utiliza useLocation para obtener la ruta actual
