@@ -74,7 +74,7 @@ function Profile() {
         try {
         setCancellingReservationId(reservationId); // Set the cancelling reservation ID
         const response = await fetch(
-            `https://proyecto-tic-g4-h8a0.onrender.com/api/reservations?reservationId=${reservationId}`,
+            `https://proyecto-tic-g4-h8a0.onrender.com/api/users/reservations?reservationId=${reservationId}`,
             {
             method: 'DELETE',
             }
